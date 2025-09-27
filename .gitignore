@@ -1,0 +1,91 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Flask
+instance/
+.webassets-cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Cookie files (sensitive data)
+cookies.txt
+cookies_auto.txt
+cookies_manual.txt
+
+# Downloaded music
+downloads/
+Music/
+
+# Temporary files
+temp_cookies.db
+*.tmp
+
+# Credentials
+credentials.py
+creadentials.py
+.env
+
+# Portable package
+MusicDownloader_Portable/
+MusicDownloader_Portable.zip
+
+# Test files
+test_*.py
+*_test.py
+
+# Numbers files
+*.numbers
+
+# Text files with personal data
+likedmix.txt
+*.csv
+*.xlsx
+
+# Backup files
+*.bak
+*.backup
