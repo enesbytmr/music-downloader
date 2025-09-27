@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎵 İndirme Durumu - Music Downloader</title>
+    <title>🎵 {{ get_text('download_status') }} - Music Downloader</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -118,6 +118,36 @@
             background: rgba(255, 255, 255, 0.9);
             color: #667eea;
         }
+        
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 6px 12px;
+            margin: 0 2px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+        }
     </style>
 </head>
 <body>
@@ -126,22 +156,28 @@
             <div class="col-lg-10">
                 <div class="main-container">
                     <!-- Header -->
-                    <div class="header-section p-4 text-center">
+                    <div class="header-section p-4 text-center position-relative">
+                        <!-- Language Selector -->
+                        <div class="language-selector">
+                            <a href="/set-language/en" class="lang-btn {{ 'active' if current_lang == 'en' else '' }}">EN</a>
+                            <a href="/set-language/tr" class="lang-btn {{ 'active' if current_lang == 'tr' else '' }}">TR</a>
+                        </div>
+                        
                         <h1 class="mb-2">
-                            <i class="fas fa-download"></i> İndirme Durumu
+                            <i class="fas fa-download"></i> {{ get_text('download_status') }}
                         </h1>
-                        <p class="mb-3 fs-6">Playlist'iniz indiriliyor...</p>
+                        <p class="mb-3 fs-6">{{ get_text('playlist_downloading') }}</p>
                         
                         <!-- Navigation Menu -->
                         <div class="nav-menu">
                             <a href="/" class="nav-btn">
-                                <i class="fas fa-home"></i> Ana Sayfa
+                                <i class="fas fa-home"></i> {{ get_text('nav_home') }}
                             </a>
                             <a href="/cookies" class="nav-btn">
-                                <i class="fas fa-cookie-bite"></i> Cookie Ayarları
+                                <i class="fas fa-cookie-bite"></i> {{ get_text('nav_cookies') }}
                             </a>
                             <a href="/progress" class="nav-btn active">
-                                <i class="fas fa-chart-line"></i> İndirme Durumu
+                                <i class="fas fa-chart-line"></i> {{ get_text('nav_progress') }}
                             </a>
                         </div>
                     </div>
@@ -154,8 +190,8 @@
                                     <div id="status-icon" class="mb-2">
                                         <i class="fas fa-spinner spinner text-primary" style="font-size: 2rem;"></i>
                                     </div>
-                                    <h6 id="status-text">Başlatılıyor...</h6>
-                                    <small id="service-type" class="text-muted">Servis algılanıyor</small>
+                                    <h6 id="status-text">{{ get_text('initializing') }}</h6>
+                                    <small id="service-type" class="text-muted">{{ get_text('service_detecting') }}</small>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
@@ -163,7 +199,7 @@
                                     <div class="mb-2">
                                         <i class="fas fa-music text-info" style="font-size: 2rem;"></i>
                                     </div>
-                                    <h6>İndirilen</h6>
+                                    <h6>{{ get_text('downloaded') }}</h6>
                                     <strong id="progress-count" class="text-info">0 / 0</strong>
                                 </div>
                             </div>
@@ -172,7 +208,7 @@
                                     <div class="mb-2">
                                         <i class="fas fa-clock text-warning" style="font-size: 2rem;"></i>
                                     </div>
-                                    <h6>Süre</h6>
+                                    <h6>{{ get_text('duration') }}</h6>
                                     <strong id="elapsed-time" class="text-warning">00:00</strong>
                                 </div>
                             </div>
@@ -181,7 +217,7 @@
                                     <div class="mb-2">
                                         <i class="fas fa-percentage text-success" style="font-size: 2rem;"></i>
                                     </div>
-                                    <h6>Tamamlanma</h6>
+                                    <h6>{{ get_text('completion') }}</h6>
                                     <strong id="completion-percentage" class="text-success">0%</strong>
                                 </div>
                             </div>
@@ -190,8 +226,8 @@
                         <!-- Progress Bar -->
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="mb-0">İndirme İlerlemesi</h6>
-                                <small id="current-song" class="text-muted pulse">Hazırlanıyor...</small>
+                                <h6 class="mb-0">{{ get_text('download_progress') }}</h6>
+                                <small id="current-song" class="text-muted pulse">{{ get_text('preparing') }}</small>
                             </div>
                             <div class="progress">
                                 <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
@@ -205,27 +241,27 @@
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h6 class="mb-0">
-                                    <i class="fas fa-terminal"></i> Canlı Loglar
+                                    <i class="fas fa-terminal"></i> {{ get_text('live_logs') }}
                                 </h6>
                                 <button id="clear-logs" class="btn btn-sm btn-outline-secondary">
-                                    <i class="fas fa-trash"></i> Temizle
+                                    <i class="fas fa-trash"></i> {{ get_text('clear') }}
                                 </button>
                             </div>
                             <div id="log-container" class="log-container p-3">
-                                <div id="logs">İndirme başlatılıyor...</div>
+                                <div id="logs">{{ get_text('download_starting') }}</div>
                             </div>
                         </div>
                         
                         <!-- Action Buttons -->
                         <div class="text-center">
                             <a href="/" class="btn btn-home me-2">
-                                <i class="fas fa-home"></i> Ana Sayfa
+                                <i class="fas fa-home"></i> {{ get_text('home') }}
                             </a>
                             <button id="refresh-btn" class="btn btn-outline-primary me-2" onclick="location.reload()">
-                                <i class="fas fa-sync-alt"></i> Yenile
+                                <i class="fas fa-sync-alt"></i> {{ get_text('refresh') }}
                             </button>
                             <button id="open-folder" class="btn btn-outline-success" style="display: none;" onclick="openFolder()">
-                                <i class="fas fa-folder-open"></i> Klasörü Aç
+                                <i class="fas fa-folder-open"></i> {{ get_text('open_folder') }}
                             </button>
                         </div>
                     </div>
@@ -260,20 +296,20 @@
                     
                     if (data.error) {
                         statusIcon.innerHTML = '<i class="fas fa-exclamation-triangle text-danger" style="font-size: 2rem;"></i>';
-                        statusText.textContent = 'Hata Oluştu';
+                        statusText.textContent = `{{ get_text('error_occurred') }}`;
                         serviceType.textContent = data.error;
                         serviceType.className = 'text-danger';
                     } else if (data.completed) {
                         statusIcon.innerHTML = '<i class="fas fa-check-circle text-success" style="font-size: 2rem;"></i>';
-                        statusText.textContent = 'Tamamlandı!';
-                        serviceType.textContent = 'İndirme başarılı';
+                        statusText.textContent = `{{ get_text('completed') }}`;
+                        serviceType.textContent = `{{ get_text('download_successful') }}`;
                         serviceType.className = 'text-success';
                         document.getElementById('open-folder').style.display = 'inline-block';
                         clearInterval(updateInterval);
                     } else if (data.is_downloading) {
                         statusIcon.innerHTML = '<i class="fas fa-download text-primary pulse" style="font-size: 2rem;"></i>';
-                        statusText.textContent = 'İndiriliyor...';
-                        serviceType.textContent = data.current_task || 'İndiriliyor';
+                        statusText.textContent = `{{ get_text('downloading') }}`;
+                        serviceType.textContent = data.current_task || `{{ get_text('downloading') }}`;
                         serviceType.className = 'text-primary';
                     }
                     
@@ -283,7 +319,7 @@
                     document.getElementById('progress-text').textContent = progress + '%';
                     document.getElementById('progress-count').textContent = `${data.progress} / ${data.total}`;
                     document.getElementById('completion-percentage').textContent = progress + '%';
-                    document.getElementById('current-song').textContent = data.current_song || 'Hazırlanıyor...';
+                    document.getElementById('current-song').textContent = data.current_song || `{{ get_text('preparing') }}`;
                 })
                 .catch(error => {
                     console.error('Status update error:', error);
@@ -323,7 +359,7 @@
         
         // Clear logs button
         document.getElementById('clear-logs').addEventListener('click', function() {
-            document.getElementById('logs').innerHTML = 'Loglar temizlendi...';
+            document.getElementById('logs').innerHTML = `{{ get_text('clear') }}...`;
         });
         
         // Start intervals

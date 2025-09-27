@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍪 Cookie Yönetimi - Music Downloader</title>
+    <title>🍪 {{ get_text('cookie_management_title') }} - Music Downloader</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -118,6 +118,36 @@
             background: rgba(255, 255, 255, 0.9);
             color: #667eea;
         }
+        
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 6px 12px;
+            margin: 0 2px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+        }
     </style>
 </head>
 <body>
@@ -126,22 +156,28 @@
             <div class="col-lg-10">
                 <div class="main-container">
                     <!-- Header -->
-                    <div class="header-section p-4 text-center">
+                    <div class="header-section p-4 text-center position-relative">
+                        <!-- Language Selector -->
+                        <div class="language-selector">
+                            <a href="/set-language/en" class="lang-btn {{ 'active' if current_lang == 'en' else '' }}">EN</a>
+                            <a href="/set-language/tr" class="lang-btn {{ 'active' if current_lang == 'tr' else '' }}">TR</a>
+                        </div>
+                        
                         <h1 class="mb-2">
-                            <i class="fas fa-cookie-bite"></i> Cookie Yönetimi
+                            <i class="fas fa-cookie-bite"></i> {{ get_text('cookie_management_title') }}
                         </h1>
-                        <p class="mb-3 fs-6">YouTube ve Spotify indirmeleri için cookie'leri ayarlayın</p>
+                        <p class="mb-3 fs-6">{{ get_text('cookie_subtitle') }}</p>
                         
                         <!-- Navigation Menu -->
                         <div class="nav-menu">
                             <a href="/" class="nav-btn">
-                                <i class="fas fa-home"></i> Ana Sayfa
+                                <i class="fas fa-home"></i> {{ get_text('nav_home') }}
                             </a>
                             <a href="/cookies" class="nav-btn active">
-                                <i class="fas fa-cookie-bite"></i> Cookie Ayarları
+                                <i class="fas fa-cookie-bite"></i> {{ get_text('nav_cookies') }}
                             </a>
                             <a href="/progress" class="nav-btn">
-                                <i class="fas fa-chart-line"></i> İndirme Durumu
+                                <i class="fas fa-chart-line"></i> {{ get_text('nav_progress') }}
                             </a>
                         </div>
                     </div>
@@ -153,18 +189,17 @@
                                 <div class="method-card auto-card p-4">
                                     <div class="text-center mb-3">
                                         <i class="fas fa-magic text-success" style="font-size: 3rem;"></i>
-                                        <h5 class="mt-2">Otomatik Çıkarma</h5>
+                                        <h5 class="mt-2">{{ get_text('auto_extraction') }}</h5>
                                     </div>
                                     <div class="mb-3">
                                         <span id="auto-status" class="status-indicator status-danger"></span>
-                                        <span id="auto-text">Kontrol ediliyor...</span>
+                                        <span id="auto-text">{{ get_text('checking') }}</span>
                                     </div>
                                     <p class="text-muted mb-3">
-                                        Browser'ınızdan otomatik olarak cookies'leri çıkarır.
-                                        YouTube ve Spotify için kullanılır!
+                                        {{ get_text('auto_desc') }}
                                     </p>
                                     <button id="extract-btn" class="btn btn-extract w-100">
-                                        <i class="fas fa-download"></i> Otomatik Çıkar
+                                        <i class="fas fa-download"></i> {{ get_text('auto_extract_btn') }}
                                     </button>
                                 </div>
                             </div>
@@ -173,20 +208,19 @@
                                 <div class="method-card upload-card p-4">
                                     <div class="text-center mb-3">
                                         <i class="fas fa-upload text-info" style="font-size: 3rem;"></i>
-                                        <h5 class="mt-2">Cookie Dosyası Yükle</h5>
+                                        <h5 class="mt-2">{{ get_text('upload_cookies') }}</h5>
                                     </div>
                                     <div class="mb-3">
                                         <span id="upload-status" class="status-indicator status-danger"></span>
-                                        <span id="upload-text">Dosya yüklenmedi</span>
+                                        <span id="upload-text">{{ get_text('file_not_uploaded') }}</span>
                                     </div>
                                     <p class="text-muted mb-3">
-                                        Hazır cookies.txt dosyanızı yükleyin.
-                                        Paylaşılan dosyalar için ideal.
+                                        {{ get_text('upload_desc') }}
                                     </p>
                                     <div class="upload-zone" id="upload-zone">
                                         <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
-                                        <p class="mb-2">cookies.txt dosyasını sürükleyin</p>
-                                        <small class="text-muted">veya tıklayın</small>
+                                        <p class="mb-2">{{ get_text('drag_drop') }}</p>
+                                        <small class="text-muted"></small>
                                         <input type="file" id="cookie-file" accept=".txt" style="display: none;">
                                     </div>
                                 </div>
@@ -196,18 +230,17 @@
                                 <div class="method-card manual-card p-4">
                                     <div class="text-center mb-3">
                                         <i class="fas fa-hand-paper text-warning" style="font-size: 3rem;"></i>
-                                        <h5 class="mt-2">Manuel Çıkarma</h5>
+                                        <h5 class="mt-2">{{ get_text('manual_extraction') }}</h5>
                                     </div>
                                     <div class="mb-3">
                                         <span id="manual-status" class="status-indicator status-danger"></span>
-                                        <span id="manual-text">Mevcut değil</span>
+                                        <span id="manual-text">{{ get_text('manual_create') }}</span>
                                     </div>
                                     <p class="text-muted mb-3">
-                                        Browser developer tools ile elle cookie çıkarma.
-                                        Teknik kullanıcılar için.
+                                        {{ get_text('manual_desc') }}
                                     </p>
                                     <button class="btn btn-outline-warning w-100" data-bs-toggle="modal" data-bs-target="#manualModal">
-                                        <i class="fas fa-book"></i> Talimatları Göster
+                                        <i class="fas fa-book"></i> {{ get_text('show_instructions') }}
                                     </button>
                                 </div>
                             </div>
@@ -216,18 +249,17 @@
                         <!-- Info Alert -->
                         <div class="alert alert-info" role="alert">
                             <i class="fas fa-info-circle"></i>
-                            <strong>Neden Cookie Gerekli?</strong>
-                            YouTube ve Spotify'dan indirme yapmak için authentikasyon gerekir. 
-                            Cookies'ler, browser'ınızda oturum açtığınızda otomatik olarak oluşur.
+                            <strong>{{ get_text('why_cookies') }}</strong>
+                            {{ get_text('cookie_info') }}
                         </div>
                         
                         <!-- Action Buttons -->
                         <div class="text-center">
                             <a href="/" class="btn btn-home me-2">
-                                <i class="fas fa-home"></i> Ana Sayfa
+                                <i class="fas fa-home"></i> {{ get_text('home') }}
                             </a>
                             <button id="refresh-status" class="btn btn-outline-primary">
-                                <i class="fas fa-sync-alt"></i> Durumu Yenile
+                                <i class="fas fa-sync-alt"></i> {{ get_text('refresh_status') }}
                             </button>
                         </div>
                     </div>
@@ -242,7 +274,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="fas fa-book"></i> Manuel Cookie Çıkarma Talimatları
+                        <i class="fas fa-book"></i> {{ get_text('manual_instructions') }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -292,10 +324,10 @@
                     const autoText = document.getElementById('auto-text');
                     if (data.auto_cookies) {
                         autoStatus.className = 'status-indicator status-success';
-                        autoText.textContent = 'Otomatik cookies mevcut';
+                        autoText.textContent = `{{ get_text('auto_available') }}`;
                     } else {
                         autoStatus.className = 'status-indicator status-danger';
-                        autoText.textContent = 'Otomatik cookies yok';
+                        autoText.textContent = `{{ get_text('auto_not_available') }}`;
                     }
                     
                     // Upload status
@@ -303,10 +335,10 @@
                     const uploadText = document.getElementById('upload-text');
                     if (data.uploaded_cookies) {
                         uploadStatus.className = 'status-indicator status-success';
-                        uploadText.textContent = 'Cookies dosyası yüklendi';
+                        uploadText.textContent = `{{ get_text('file_uploaded') }}`;
                     } else {
                         uploadStatus.className = 'status-indicator status-danger';
-                        uploadText.textContent = 'Dosya yüklenmedi';
+                        uploadText.textContent = `{{ get_text('file_not_uploaded') }}`;
                     }
                     
                     // Manual status
@@ -314,10 +346,10 @@
                     const manualText = document.getElementById('manual-text');
                     if (data.manual_cookies) {
                         manualStatus.className = 'status-indicator status-success';
-                        manualText.textContent = 'Manuel cookies mevcut';
+                        manualText.textContent = `{{ get_text('manual_available') }}`;
                     } else {
                         manualStatus.className = 'status-indicator status-warning';
-                        manualText.textContent = 'Elle oluşturulmalı';
+                        manualText.textContent = `{{ get_text('manual_create') }}`;
                     }
                 })
                 .catch(error => console.error('Status update error:', error));
@@ -328,7 +360,7 @@
             const btn = this;
             const originalText = btn.innerHTML;
             
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Çıkarılıyor...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {{ get_text("auto_extract_btn") }}...';
             btn.disabled = true;
             
             fetch('/api/extract-cookies', { method: 'POST' })

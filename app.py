@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file, session
 import subprocess
 import os
 import sys
@@ -15,6 +15,161 @@ from pathlib import Path
 
 app = Flask(__name__)
 app.secret_key = 'music_downloader_secret_key_2025'
+
+# Language translations
+TRANSLATIONS = {
+    'en': {
+        'title': '🎵 Music Downloader',
+        'subtitle': 'Easily download YouTube Music and Spotify playlists!',
+        'nav_home': 'Home',
+        'nav_cookies': 'Cookie Settings',
+        'nav_progress': 'Download Status',
+        'youtube_desc': 'Download Music playlists in the best quality',
+        'spotify_desc': 'Download Spotify playlists in M4A format',
+        'url_label': 'Playlist URL',
+        'url_placeholder': 'Paste YouTube Music or Spotify playlist URL here...',
+        'folder_label': 'Folder Name',
+        'folder_placeholder': 'Folder name for downloaded songs (optional)',
+        'folder_help': 'Automatic name will be given if left blank',
+        'location_label': 'Download Location',
+        'location_help': 'Main folder where songs will be saved',
+        'start_download': 'Start Download',
+        'cookie_management': 'Cookie Management',
+        'best_quality': 'Best Quality',
+        'best_quality_desc': 'High quality in M4A format',
+        'fast_download': 'Fast Download',
+        'fast_download_desc': 'Parallel download support',
+        'metadata': 'Metadata',
+        'metadata_desc': 'Song information and album art',
+        'responsive': 'Responsive',
+        'responsive_desc': 'Works on all devices',
+        'examples': 'Examples:',
+        'youtube_example': '• YouTube Music: https://music.youtube.com/playlist?list=...',
+        'spotify_example': '• Spotify: https://open.spotify.com/playlist/...',
+        'language': 'Language',
+        'download_status': 'Download Status',
+        'playlist_downloading': 'Your playlist is downloading...',
+        'initializing': 'Initializing...',
+        'service_detecting': 'Detecting service',
+        'downloaded': 'Downloaded',
+        'duration': 'Duration',
+        'completion': 'Completion',
+        'download_progress': 'Download Progress',
+        'preparing': 'Preparing...',
+        'live_logs': 'Live Logs',
+        'clear': 'Clear',
+        'download_starting': 'Download starting...',
+        'home': 'Home',
+        'refresh': 'Refresh',
+        'open_folder': 'Open Folder',
+        'error_occurred': 'Error Occurred',
+        'completed': 'Completed!',
+        'download_successful': 'Download successful',
+        'downloading': 'Downloading...',
+        'cookie_management_title': 'Cookie Management',
+        'cookie_subtitle': 'Set up cookies for YouTube and Spotify downloads',
+        'auto_extraction': 'Auto Extraction',
+        'auto_extract_btn': 'Auto Extract',
+        'auto_desc': 'Automatically extracts cookies from your browser. Used for YouTube and Spotify!',
+        'upload_cookies': 'Upload Cookie File',
+        'upload_desc': 'Upload your ready cookies.txt file. Ideal for shared files.',
+        'manual_extraction': 'Manual Extraction',
+        'show_instructions': 'Show Instructions',
+        'manual_desc': 'Extract cookies manually using browser developer tools. For technical users.',
+        'why_cookies': 'Why Cookies Needed?',
+        'cookie_info': 'Authentication is required to download from YouTube and Spotify. Cookies are automatically created when you log in to your browser.',
+        'refresh_status': 'Refresh Status',
+        'checking': 'Checking...',
+        'auto_available': 'Auto cookies available',
+        'auto_not_available': 'Auto cookies not available',
+        'file_uploaded': 'Cookie file uploaded',
+        'file_not_uploaded': 'File not uploaded',
+        'manual_available': 'Manual cookies available',
+        'manual_create': 'Must be created manually',
+        'drag_drop': 'Drag cookies.txt file or click',
+        'manual_instructions': 'Manual Cookie Extraction Instructions'
+    },
+    'tr': {
+        'title': '🎵 Music Downloader',
+        'subtitle': 'YouTube Music ve Spotify playlist\'lerini kolayca indirin!',
+        'nav_home': 'Ana Sayfa',
+        'nav_cookies': 'Cookie Ayarları',
+        'nav_progress': 'İndirme Durumu',
+        'youtube_desc': 'Music playlist\'lerini en iyi kalitede indirin',
+        'spotify_desc': 'Spotify playlist\'lerini M4A formatında indirin',
+        'url_label': 'Playlist URL\'si',
+        'url_placeholder': 'YouTube Music veya Spotify playlist URL\'sini buraya yapıştırın...',
+        'folder_label': 'Klasör Adı',
+        'folder_placeholder': 'İndirilen şarkılar için klasör adı (opsiyonel)',
+        'folder_help': 'Boş bırakırsanız otomatik ad verilecek',
+        'location_label': 'İndirme Konumu',
+        'location_help': 'Şarkıların kaydedileceği ana klasör',
+        'start_download': 'İndirmeyi Başlat',
+        'cookie_management': 'Cookie Yönetimi',
+        'best_quality': 'En İyi Kalite',
+        'best_quality_desc': 'M4A formatında yüksek kalite',
+        'fast_download': 'Hızlı İndirme',
+        'fast_download_desc': 'Paralel indirme desteği',
+        'metadata': 'Metadata',
+        'metadata_desc': 'Şarkı bilgileri ve kapak resmi',
+        'responsive': 'Responsive',
+        'responsive_desc': 'Tüm cihazlarda çalışır',
+        'examples': 'Örnekler:',
+        'youtube_example': '• YouTube Music: https://music.youtube.com/playlist?list=...',
+        'spotify_example': '• Spotify: https://open.spotify.com/playlist/...',
+        'language': 'Dil',
+        'download_status': 'İndirme Durumu',
+        'playlist_downloading': 'Playlist\'iniz indiriliyor...',
+        'initializing': 'Başlatılıyor...',
+        'service_detecting': 'Servis algılanıyor',
+        'downloaded': 'İndirilen',
+        'duration': 'Süre',
+        'completion': 'Tamamlanma',
+        'download_progress': 'İndirme İlerlemesi',
+        'preparing': 'Hazırlanıyor...',
+        'live_logs': 'Canlı Loglar',
+        'clear': 'Temizle',
+        'download_starting': 'İndirme başlatılıyor...',
+        'home': 'Ana Sayfa',
+        'refresh': 'Yenile',
+        'open_folder': 'Klasörü Aç',
+        'error_occurred': 'Hata Oluştu',
+        'completed': 'Tamamlandı!',
+        'download_successful': 'İndirme başarılı',
+        'downloading': 'İndiriliyor...',
+        'cookie_management_title': 'Cookie Yönetimi',
+        'cookie_subtitle': 'YouTube ve Spotify indirmeleri için cookie\'leri ayarlayın',
+        'auto_extraction': 'Otomatik Çıkarma',
+        'auto_extract_btn': 'Otomatik Çıkar',
+        'auto_desc': 'Browser\'ınızdan otomatik olarak cookies\'leri çıkarır. YouTube ve Spotify için kullanılır!',
+        'upload_cookies': 'Cookie Dosyası Yükle',
+        'upload_desc': 'Hazır cookies.txt dosyanızı yükleyin. Paylaşılan dosyalar için ideal.',
+        'manual_extraction': 'Manuel Çıkarma',
+        'show_instructions': 'Talimatları Göster',
+        'manual_desc': 'Browser developer tools ile elle cookie çıkarma. Teknik kullanıcılar için.',
+        'why_cookies': 'Neden Cookie Gerekli?',
+        'cookie_info': 'YouTube ve Spotify\'dan indirme yapmak için authentikasyon gerekir. Cookies\'ler, browser\'ınızda oturum açtığınızda otomatik olarak oluşur.',
+        'refresh_status': 'Durumu Yenile',
+        'checking': 'Kontrol ediliyor...',
+        'auto_available': 'Otomatik cookies mevcut',
+        'auto_not_available': 'Otomatik cookies yok',
+        'file_uploaded': 'Cookies dosyası yüklendi',
+        'file_not_uploaded': 'Dosya yüklenmedi',
+        'manual_available': 'Manuel cookies mevcut',
+        'manual_create': 'Elle oluşturulmalı',
+        'drag_drop': 'cookies.txt dosyasını sürükleyin veya tıklayın',
+        'manual_instructions': 'Manuel Cookie Çıkarma Talimatları'
+    }
+}
+
+def get_language():
+    """Get current language from session, default to English"""
+    return session.get('language', 'en')
+
+def get_text(key):
+    """Get translated text for current language"""
+    lang = get_language()
+    return TRANSLATIONS.get(lang, TRANSLATIONS['en']).get(key, key)
 
 # Ana dizinleri ayarla
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -299,7 +454,14 @@ def run_spotify_downloader(url, output_dir, folder_name):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', get_text=get_text, current_lang=get_language())
+
+@app.route('/set-language/<lang>')
+def set_language(lang):
+    """Set language preference"""
+    if lang in TRANSLATIONS:
+        session['language'] = lang
+    return redirect(request.referrer or url_for('index'))
 
 @app.route('/download', methods=['POST'])
 def download():
@@ -309,7 +471,8 @@ def download():
         output_dir = request.form.get('output_dir', DOWNLOADS_DIR).strip()
         
         if not url:
-            flash('URL boş olamaz!', 'error')
+            error_msg = 'URL cannot be empty!' if get_language() == 'en' else 'URL boş olamaz!'
+            flash(error_msg, 'error')
             return redirect(url_for('index'))
         
         if not folder_name:
@@ -337,22 +500,24 @@ def download():
             thread.start()
             
         else:
-            flash('Desteklenmeyen URL! Lütfen YouTube Music veya Spotify playlist URL\'si girin.', 'error')
+            error_msg = 'Unsupported URL! Please enter YouTube Music or Spotify playlist URL.' if get_language() == 'en' else 'Desteklenmeyen URL! Lütfen YouTube Music veya Spotify playlist URL\'si girin.'
+            flash(error_msg, 'error')
             return redirect(url_for('index'))
         
         return redirect(url_for('progress'))
         
     except Exception as e:
-        flash(f'Hata: {str(e)}', 'error')
+        error_msg = f'Error: {str(e)}' if get_language() == 'en' else f'Hata: {str(e)}'
+        flash(error_msg, 'error')
         return redirect(url_for('index'))
 
 @app.route('/progress')
 def progress():
-    return render_template('progress.html')
+    return render_template('progress.html', get_text=get_text, current_lang=get_language())
 
 @app.route('/cookies')
 def cookies_page():
-    return render_template('cookies.html')
+    return render_template('cookies.html', get_text=get_text, current_lang=get_language())
 
 @app.route('/api/status')
 def api_status():

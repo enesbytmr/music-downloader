@@ -1,26 +1,26 @@
 # 🎵 Music Downloader Web App
 
-Modern web arayüzü ile YouTube Music ve Spotify playlist'lerini kolayca indirin!
+Easily download YouTube Music and Spotify playlists with a modern web interface!
 
 ![Music Downloader](https://img.shields.io/badge/Music-Downloader-blue)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-green)
 ![Flask](https://img.shields.io/badge/Flask-Web%20App-red)
 ![Cross Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
 
-## ✨ Özellikler
+## ✨ Features
 
-- 🎵 **Dual Platform:** YouTube Music + Spotify desteği
-- 🎨 **Modern Web Arayüzü:** Responsive ve kullanıcı dostu tasarım
-- 📊 **Canlı Takip:** Real-time progress bar ve log takibi
-- 🎧 **Yüksek Kalite:** M4A formatında ses indirme
-- 🏷️ **Metadata:** Şarkı bilgileri ve kapak resmi otomatik ekleme
-- 🍪 **Otomatik Cookie Yönetimi:** Browser'dan otomatik cookie çıkarma
-- 🌐 **Cross-Platform:** Windows, macOS, Linux uyumlu
-- 🚀 **Kolay Kurulum:** Tek komutla kurulum ve başlatma
+- 🎵 **Dual Platform:** YouTube Music + Spotify support
+- 🎨 **Modern Web Interface:** Responsive and user-friendly design
+- 📊 **Live Tracking:** Real-time progress bar and log monitoring
+- 🎧 **High Quality:** M4A format audio downloads
+- 🏷️ **Metadata:** Automatic song information and album art embedding
+- 🍪 **Automatic Cookie Management:** Auto cookie extraction from browsers
+- 🌐 **Cross-Platform:** Compatible with Windows, macOS, Linux
+- 🚀 **Easy Setup:** One-command installation and startup
 
-## 🚀 Hızlı Başlangıç
+## 🚀 Quick Start
 
-### İlk Kurulum (Sadece Bir Kez)
+### Initial Setup (One Time Only)
 
 #### Windows
 ```cmd
@@ -33,7 +33,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### Günlük Kullanım (Her Seferinde)
+### Daily Usage (Every Time)
 
 #### Windows
 ```cmd
@@ -45,147 +45,143 @@ start_app.bat
 ./start_app.sh
 ```
 
-### Web Arayüzü
-1. Kurulum/başlatma sonrası tarayıcıda: **http://localhost:5001**
-2. YouTube Music veya Spotify playlist URL'sini yapıştırın
-3. İndirmeyi başlatın ve canlı takip edin!
+### Web Interface
+1. After setup/startup, open in browser: **http://localhost:5001**
+2. Paste YouTube Music or Spotify playlist URL
+3. Start download and track live progress!
 
-## 📱 Kullanım Adımları
+## 📱 Usage Steps
 
-1. **URL Girişi:** YouTube Music veya Spotify playlist URL'sini yapıştırın
-2. **Klasör Adı:** İsteğe bağlı - boş bırakırsanız otomatik ad verilir
-3. **İndirme Konumu:** Varsayılan: `~/Desktop/Music`
-4. **Cookie Yönetimi:** YouTube için otomatik cookie ayarları
-5. **Canlı İzleme:** Progress sayfasında real-time takip
+1. **URL Input:** Paste YouTube Music or Spotify playlist URL
+2. **Folder Name:** Optional - automatic name if left blank
+3. **Download Location:** Default: `~/Desktop/Music`
+4. **Cookie Management:** Automatic cookie settings for YouTube
+5. **Live Monitoring:** Real-time tracking on progress page
 
-## 🛠️ Kurulum Detayları
+## 🛠️ Installation Details
 
-### Gereksinimler
-- Python 3.8+ (otomatik kurulacak)
-- İnternet bağlantısı
-- Disk alanı (playlist boyutuna göre)
+### Requirements
+- Python 3.8+ (will be installed automatically)
+- Internet connection
+- Disk space (depending on playlist size)
 
-### Manuel Kurulum
+### Manual Installation
 ```bash
-# Repository'yi klonlayın
+# Clone the repository
 git clone https://github.com/USERNAME/music-downloader-web.git
 cd music-downloader-web
 
-# Gerekli paketleri yükleyin
+# Install required packages
 pip install -r requirements.txt
 
-# Uygulamayı başlatın
+# Start the application
 ./start_app.sh
 ```
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 music-downloader-web/
-├── setup.sh/bat          # İlk kurulum scriptleri
-├── start_app.sh/bat      # Günlük başlatma scriptleri
+├── setup.sh/bat          # Initial setup scripts
+├── start_app.sh/bat      # Daily startup scripts
 ├── ytbmsc.py            # YouTube Music downloader
 ├── spotidownloader.py   # Spotify downloader
 ├── music_downloader_app/
-│   ├── app.py           # Flask web uygulaması
-│   ├── templates/       # HTML şablonları
-│   │   ├── index.html   # Ana sayfa
-│   │   ├── cookies.html # Cookie yönetimi
-│   │   └── progress.html# İndirme takibi
-│   └── static/          # CSS/JS dosyaları
-├── auto_cookie_extractor.py # Otomatik cookie çıkarma
+│   ├── app.py           # Flask web application
+│   ├── templates/       # HTML templates
+│   │   ├── index.html   # Main page
+│   │   ├── cookies.html # Cookie management
+│   │   └── progress.html# Download tracking
+│   └── static/          # CSS/JS files
+├── auto_cookie_extractor.py # Automatic cookie extraction
 ├── cookies.txt          # YouTube authentication
 └── README.md
 ```
 
-## 🍪 Cookie Yönetimi
+## 🍪 Cookie Management
 
-### Otomatik Cookie Çıkarma
-- Chrome, Edge, Firefox, Safari desteği
-- Tek tıkla browser'dan cookie çıkarma
-- Cross-platform uyumluluk
+### Automatic Cookie Extraction
+- Chrome, Edge, Firefox, Safari support
+- One-click cookie extraction from browsers
+- Cross-platform compatibility
 
-### Manuel Cookie Yükleme
-- Drag & drop dosya yükleme
-- Hazır cookies.txt dosyası desteği
-- Netscape format uyumluluğu
+### Manual Cookie Upload
+- Drag & drop file upload
+- Ready-made cookies.txt file support
+- Netscape format compatibility
 
-## 🎯 Desteklenen Platformlar
+## 🎯 Supported Platforms
 
-| Platform | YouTube Music | Spotify | Notlar |
+| Platform | YouTube Music | Spotify | Notes |
 |----------|---------------|---------|--------|
-| **YouTube Music** | ✅ | - | Cookie gerekli |
-| **Spotify** | - | ✅ | YouTube'dan arama |
+| **YouTube Music** | ✅ | - | Cookie required |
+| **Spotify** | - | ✅ | Search from YouTube |
 
-## 📊 Özellik Detayları
+## 📊 Feature Details
 
-### Web Arayüzü
-- **Responsive Tasarım:** Tüm cihazlarda çalışır
+### Web Interface
+- **Responsive Design:** Works on all devices
 - **Modern UI:** Bootstrap 5 + Font Awesome
-- **Real-time Updates:** AJAX ile canlı güncelleme
-- **Progress Tracking:** Detaylı indirme takibi
+- **Real-time Updates:** Live updates with AJAX
+- **Progress Tracking:** Detailed download monitoring
 
-### İndirme Özellikleri
-- **Yüksek Kalite:** M4A formatında ses
-- **Metadata:** Otomatik şarkı bilgileri
-- **Thumbnail:** Kapak resmi ekleme
-- **Batch Download:** Tüm playlist toplu indirme
+### Download Features
+- **High Quality:** M4A format audio
+- **Metadata:** Automatic song information
+- **Thumbnail:** Album art embedding
+- **Batch Download:** Bulk playlist downloading
 
-## 🔧 Sorun Giderme
+## 🔧 Troubleshooting
 
-### Yaygın Sorunlar
+### Common Issues
 
-**1. YouTube "Giriş yapın" hatası:**
-- Cookie Ayarları sayfasından otomatik cookie çıkarın
-- Browser'da YouTube'a giriş yapmış olduğunuzdan emin olun
+**1. YouTube "Sign in" error:**
+- Extract automatic cookies from Cookie Settings page
+- Make sure you're logged into YouTube in your browser
 
-**2. Port 5001 kullanımda:**
-- Mevcut uygulamayı kapatın: `Ctrl+C`
-- Port kontrolü: `lsof -i :5001`
+**2. Port 5001 in use:**
+- Close existing application: `Ctrl+C`
+- Check port: `lsof -i :5001`
 
-**3. Python bulunamadı:**
-- Python 3.8+ yükleyin
-- PATH ayarlarını kontrol edin
+**3. Python not found:**
+- Install Python 3.8+
+- Check PATH settings
 
-**4. İndirme başlamıyor:**
-- İnternet bağlantınızı kontrol edin
-- Playlist URL'sinin doğru olduğundan emin olun
-- Log dosyalarını kontrol edin
+**4. Download not starting:**
+- Check your internet connection
+- Make sure playlist URL is correct
+- Check log files
 
-### Destek
+### Support
 
-Sorun yaşarsanız:
-1. Terminali/CMD'yi yönetici olarak çalıştırın
-2. Antivürüs yazılımınızı geçici kapatın
-3. Firewall ayarlarını kontrol edin
-4. Issue açın: [GitHub Issues](https://github.com/USERNAME/music-downloader-web/issues)
+If you experience issues:
+1. Run Terminal/CMD as administrator
+2. Temporarily disable antivirus software
+3. Check firewall settings
+4. Open an issue: [GitHub Issues](https://github.com/USERNAME/music-downloader-web/issues)
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-1. Repository'yi fork edin
-2. Feature branch oluşturun: `git checkout -b feature/AmazingFeature`
-3. Değişikliklerinizi commit edin: `git commit -m 'Add AmazingFeature'`
-4. Branch'i push edin: `git push origin feature/AmazingFeature`
-5. Pull Request açın
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit your changes: `git commit -m 'Add AmazingFeature'`
+4. Push to the branch: `git push origin feature/AmazingFeature`
+5. Open a Pull Request
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje MIT lisansı altında dağıtılmaktadır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+This project is distributed under the MIT License. See [LICENSE](LICENSE) file for details.
 
-## 🙏 Teşekkürler
+## 🙏 Acknowledgments
 
-- [yt-dlp](https://github.com/yt-dlp/yt-dlp) - YouTube indirme motoru
-- [spotdl](https://github.com/spotDL/spotify-downloader) - Spotify indirme
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) - YouTube download engine
+- [spotdl](https://github.com/spotDL/spotify-downloader) - Spotify downloader
 - [Flask](https://flask.palletsprojects.com/) - Web framework
 - [Bootstrap](https://getbootstrap.com/) - UI framework
 
-## 📞 İletişim
-
-- **GitHub:** [@USERNAME](https://github.com/USERNAME)
-- **Issues:** [Sorun bildir](https://github.com/USERNAME/music-downloader-web/issues)
 
 ---
 
-⭐ **Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!** ⭐
+⭐ **Don't forget to star this project if you liked it!** ⭐
 
-Made with ❤️ by Music Downloader Team
+
